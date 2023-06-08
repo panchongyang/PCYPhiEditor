@@ -1,25 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useMemo, useState } from "react";
+import "./App.css";
+import { ICanvas } from "./canvas";
+import { NotesControl } from "./controls/notes/NotesControl";
+import { EditorContext, EditorContextValue } from "./EditorContext";
+import { DividerNumberControl } from "./controls/divider/DividerNumberControl";
+import { GutterControl } from "./controls/gutter/GutterControl";
+import { debounce } from "./debounce";
 
 function App() {
+  const [canvasScrollTop, setTop] = useState(0);
+  const [editorContextValue, setEditor] = useState<EditorContextValue>({
+    beatGutter: 240,
+    dividerNumber: 4,
+    noteType: 'note',
+    note: []
+  });
+
+  const callback = useMemo(
+    () =>
+      debounce((e) => {
+        setTop((e.target as HTMLDivElement).scrollTop);
+      }, 0),
+    []
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <EditorContext.Provider value={{
+      value: editorContextValue,
+      set: setEditor
+    }}>
+      <div className="App">
+        <div
+          onScroll={(e) => {
+            callback(e);
+          }}
+          className="canvas-content"
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <ICanvas scrollTop={canvasScrollTop}></ICanvas>
+        </div>
+        <div className="controls">
+          <NotesControl />
+          <DividerNumberControl />
+          <GutterControl />
+        </div>
+      </div>
+    </EditorContext.Provider>
   );
 }
 
