@@ -8,7 +8,7 @@ export class PreGridNote extends CursorNote {
     gutter: number;
     divide: number;
   };
-  beat: number = 0;
+  beat = 0;
 
   constructor(
     ctx: CanvasContext,

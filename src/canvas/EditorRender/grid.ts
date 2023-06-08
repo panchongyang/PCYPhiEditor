@@ -6,7 +6,7 @@ import { MusicInfo } from "./music";
 export class Grid extends Render {
   music: MusicInfo;
   gutter: number;
-  timeDivideNumber: number = 4;
+  timeDivideNumber = 4;
 
   constructor(
     ctx: CanvasContext,

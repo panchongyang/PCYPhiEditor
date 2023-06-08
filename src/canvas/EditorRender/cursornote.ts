@@ -8,7 +8,7 @@ export class CursorNote extends Render {
   public x: number;
   public y: number;
   public noteType: NoteType;
-  public width: number = 60;
+  public width = 60;
 
   constructor(ctx: CanvasContext, layers: Layers, x: number, y: number, type: NoteType) {
     super(ctx, layers);

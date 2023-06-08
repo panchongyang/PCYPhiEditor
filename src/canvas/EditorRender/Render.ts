@@ -10,7 +10,5 @@ export class Render {
     this.layers = layers;
   }
 
-  render() {
-
-  }
+  render() {}
 }
